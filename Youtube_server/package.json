@@ -1,0 +1,12 @@
+{
+  "name": "youtube_server",
+  "version": "1.0.0",
+  "description": "Youtbe server in mern stck project",
+  "license": "ISC",
+  "author": "Anupam Kaushik",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
