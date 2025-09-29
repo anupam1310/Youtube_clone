@@ -4,9 +4,15 @@
   "description": "Youtbe server in mern stck project",
   "license": "ISC",
   "author": "Anupam Kaushik",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
   }
 }
