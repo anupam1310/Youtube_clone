@@ -13,6 +13,7 @@ const videoSchema = new Schema({
     title: { type: String, required: true },
     thumbnailUrl: { type: String, required: true },
     description: { type: String },
+    tags: { type: [String] },
     channelId: { type: String, required: true },
     uploader: { type: String, required: true },
     views: { type: Number, default: 0 },

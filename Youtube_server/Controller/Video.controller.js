@@ -26,5 +26,5 @@ export async function getAllVideos(req, res) {
         res.status(200).json(videos);
     } catch (error) {
         res.status(500).json({ message: "Error fetching videos", error });
-    }
+        }
 };
