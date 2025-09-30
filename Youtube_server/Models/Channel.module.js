@@ -7,15 +7,14 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 const channelSchema = new Schema({
-    channelId: { type: String, required: true },
     channelName: { type: String, required: true },
-    owner: { type: String, required: true },
+    ownerId: { type: String, required: true },
     description: { type: String },
     channelBanner: { type: String },
     subscribers: { type: Number, default: 0 },
     videos: [{ type: String }]
 });
 
-const Channel = mongoose.model('Channel', channelSchema);
+const ChannelModel = mongoose.model('Channel', channelSchema);
 
 export default ChannelModel;
