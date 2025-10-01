@@ -37,7 +37,7 @@ function LoginPage() {
       <form onSubmit={handleLogin}>
         <label htmlFor="email">Email:</label>
         <input
-          id="email"
+          id="Login_email"
           type="email"
           placeholder="Email"
           value={email}
@@ -46,7 +46,7 @@ function LoginPage() {
         />
         <label htmlFor="password">Password:</label>
         <input
-          id="password"
+          id="Login_password"
           type="password"
           placeholder="Password"
           value={password}

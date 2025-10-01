@@ -13,15 +13,17 @@ function RegisterPage() {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:4050/api/register", {
-                name,
-                email,
-                password,
-                avatar,
+                username: name,
+                email: email,
+                password: password,
+                avatar_url: avatar,
             });
             console.log(response.data);
             // Handle successful registration (e.g., redirect to login page)
         } catch (err) {
             setError(err.response.data.message);
+            // console.log(err.response.data.error);
+            
         }
     };
 
