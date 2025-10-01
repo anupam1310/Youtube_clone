@@ -1,31 +1,26 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:4050/api/login", {
-                email,
-                password,
+                email: email,
+                password: password,
             });
             console.log(response.data);
-            //handle storing token in header, in field authorization preceded by prefix BEARER
-
-            // localStorage.setItem("token", response.data.token);
-            // setError("");
-            // window.location.href = "/"; // Redirect to home page after login
-            // axios.defaults.headers.common['Authorization'] = `BEARER ${response.data.token}`;
+            // store token in local storage
+            localStorage.setItem("token", response.data.token);
+            setError("");
+            navigate("/");
   
-
-
-
-            
-
         } catch (err) {
             setError(err.response.data.message);
         }

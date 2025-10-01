@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { FaBars, FaSearch, FaUserCircle } from 'react-icons/fa';
 import youtube_logo from '../assets/youtube.png';
 import search_icon from '../assets/search.png';
+import axios from 'axios';
+
 
 
 function Header() {
@@ -9,16 +11,28 @@ function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isChannelCreated, setIsChannelCreated] = useState(false);
 
-
-
-
-
-
-
-
-
-
-
+    // check token in local storage
+    useEffect(() => {
+      const verifyToken = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setIsLoggedIn(false);
+          return;
+        }
+        try {
+          const response = await axios.post('/api/verify', { token });
+          if (response.data.valid) {
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+          }
+        } catch (error) {
+          console.error("Error verifying token:", error);
+          setIsLoggedIn(false);
+        }
+      };
+      verifyToken();
+    }, []);
 
   return (
     

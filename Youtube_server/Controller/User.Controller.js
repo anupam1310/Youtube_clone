@@ -30,7 +30,7 @@ export async function RegisterUser(req, res) {
 
     
     try {
-        
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new UserModel({ username, email, password: hashedPassword, avatar_url });
         await newUser.save();
@@ -74,3 +74,16 @@ export function LogoutUser(req, res) {
     }
 
 };
+
+export async function VerifyUser(req, res) {
+    try {
+        const userId = req.user.userId;
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({ message: "User verified", user });
+    } catch (error) {
+        res.status(500).json({ message: "Error verifying user", error });
+    }
+}

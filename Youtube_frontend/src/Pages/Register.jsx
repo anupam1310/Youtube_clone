@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
+import { Link , useNavigate} from "react-router-dom";
+
 
 function RegisterPage() {
 
@@ -19,7 +21,8 @@ function RegisterPage() {
                 avatar_url: avatar,
             });
             console.log(response.data);
-            // Handle successful registration (e.g., redirect to login page)
+            setError("");
+            navigate("/login");
         } catch (err) {
             setError(err.response.data.message);
             // console.log(err.response.data.error);
@@ -93,6 +96,10 @@ function RegisterPage() {
                     >
                         Register
                     </button>
+                    <div className="mt-4 text-center">
+                        <span className="text-gray-600 text-sm">Already registered? </span>
+                        <Link to="/login" className="text-blue-600 hover:underline text-sm">Go to Login Page</Link>
+                    </div>
                 </form>
                 {error && (
                     <p className="mt-4 text-center text-red-500 text-sm">{error}</p>
