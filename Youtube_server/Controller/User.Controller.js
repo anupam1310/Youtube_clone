@@ -5,11 +5,11 @@ import bcrypt from 'bcrypt';
 
 export async function RegisterUser(req, res) {
     // Registration logic here
-    const { username, email, password, avatar_url } = req.body;
+    const { fullname, email, password, avatar_url } = req.body;
  
     // Check if user already exists
     const existingUser = await UserModel.findOne({ email });
-    console.log(existingUser);
+    // console.log(existingUser);
     if (existingUser) {
         return res.status(409).json({ message: "User already exists, Login instead" });
     }
@@ -32,7 +32,7 @@ export async function RegisterUser(req, res) {
     try {
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({ username, email, password: hashedPassword, avatar_url });
+        const newUser = new UserModel({ fullname, email, password: hashedPassword, avatar_url });
         await newUser.save();
         res.status(200).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
@@ -59,7 +59,7 @@ export async function LoginUser(req, res) {
         res.status(200).json({ message: "Login successful", token });
     } catch (error) {
         res.status(500).json({ message: "Error logging in", error });
-        console.log(error);
+        // console.log(error);
     }
 }
 
@@ -85,5 +85,6 @@ export async function VerifyUser(req, res) {
         res.status(200).json({ message: "User verified", user });
     } catch (error) {
         res.status(500).json({ message: "Error verifying user", error });
+        console.log(error);
     }
 }

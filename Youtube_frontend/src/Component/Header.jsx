@@ -3,11 +3,13 @@ import { FaBars, FaSearch, FaUserCircle } from 'react-icons/fa';
 import youtube_logo from '../assets/youtube.png';
 import search_icon from '../assets/search.png';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Header() {
-    
+    const navigate = useNavigate();
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isChannelCreated, setIsChannelCreated] = useState(false);
 
@@ -20,8 +22,16 @@ function Header() {
           return;
         }
         try {
-          const response = await axios.post('/api/verify', { token });
-          if (response.data.valid) {
+          const response = await axios.post(
+            'http://localhost:4050/api/verify',
+            {},
+            {
+              headers: {
+                Authorization: `BEARER ${token}`,
+              },
+            }
+          );
+          if (response.data.user) {
             setIsLoggedIn(true);
           } else {
             setIsLoggedIn(false);
@@ -33,6 +43,12 @@ function Header() {
       };
       verifyToken();
     }, []);
+
+
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+    };
 
   return (
     
@@ -64,7 +80,7 @@ function Header() {
       {/* Right: Icons */}
         <div>
         {!isLoggedIn ? (
-        <button>Sign In</button>
+        <button onClick={() => navigate("/register")}>Sign In</button>
             ) : (
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           
@@ -73,7 +89,9 @@ function Header() {
             : 
             <button>My Channel</button>
           }
-          <button style={{ color: 'blue', fontWeight: 'bold' }}>Sign Out </button>
+          <button style={{ color: 'blue', fontWeight: 'bold' }} onClick={handleLogout}>
+            Sign Out
+          </button>
           <FaUserCircle className="text-6xl text-gray-700 hover:bg-gray-100 p-2 rounded-full" />
         </div>
         )}

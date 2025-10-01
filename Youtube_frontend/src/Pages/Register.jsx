@@ -10,12 +10,12 @@ function RegisterPage() {
     const [password, setPassword] = useState("");
     const [avatar, setAvatar] = useState("");
     const [error, setError] = useState("");
-
+    const navigate = useNavigate();
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:4050/api/register", {
-                username: name,
+                fullname: name,
                 email: email,
                 password: password,
                 avatar_url: avatar,
@@ -24,6 +24,7 @@ function RegisterPage() {
             setError("");
             navigate("/login");
         } catch (err) {
+            console.error(err);
             setError(err.response.data.message);
             // console.log(err.response.data.error);
             

@@ -1,10 +1,11 @@
 import { createChannel,getChannelName,getChannelById } from "../Controller/Channel.Controller.js";
-import { verify } from "jsonwebtoken";
+
+import { verifyToken } from "../Middleware/verify.js";
 
 function ChannelRouter(app) {
-    app.post('/api/channel/create', verify, createChannel);
-    app.get('/api/channel/name/:id', verify, getChannelName);
-    app.get('/api/channel/:id', verify, getChannelById);
+    app.post('/api/channel/create', verifyToken, createChannel);
+    app.get('/api/channel/name/:id', verifyToken, getChannelName);
+    app.get('/api/channel/:id', verifyToken, getChannelById);
 }
 
 export default ChannelRouter;
