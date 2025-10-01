@@ -30,6 +30,7 @@ export async function RegisterUser(req, res) {
 
     
     try {
+        
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new UserModel({ username, email, password: hashedPassword, avatar_url });
         await newUser.save();
