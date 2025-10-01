@@ -1,4 +1,4 @@
-import VideoModel from "../Models/videos.model";
+import VideoModel from "../Models/videos.model.js";
 
 export async function getRandomVideos(req, res) {
     try {

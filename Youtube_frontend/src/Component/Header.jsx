@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import { FaBars, FaSearch, FaUserCircle } from 'react-icons/fa';
 import youtube_logo from '../assets/youtube.png';
 import search_icon from '../assets/search.png';
-import "./Component_Css/Header.css"
+
 
 function Header() {
     
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const [isChannelCreated, setIsChannelCreated] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isChannelCreated, setIsChannelCreated] = useState(false);
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     
     <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">

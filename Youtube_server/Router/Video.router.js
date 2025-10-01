@@ -1,4 +1,4 @@
-import { getAllVideos,getRandomVideos,getVideoById } from "../Controller/Video.controller";
+import { getAllVideos,getRandomVideos,getVideoById } from "../Controller/Video.controller.js";
 function VideoRouter(app) {
 
     app.get('/api/video/:id', getVideoById);

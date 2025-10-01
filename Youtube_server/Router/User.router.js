@@ -1,5 +1,6 @@
 
-import { RegisterUser,LoginUser,LogoutUser } from "../Controller/User.Controller";
+
+import { RegisterUser,LoginUser,LogoutUser } from "../Controller/User.Controller.js";
 function userRouter(app) {
     app.post('/api/register', RegisterUser);
     app.post('/api/login', LoginUser);

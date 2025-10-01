@@ -5,11 +5,16 @@ import VideoRouter from "./Router/Video.router.js";
 import ChannelRouter from "./Router/Channel.router.js";
 import cors from "cors";
 
+
+
+const app = express();
+
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-const app = express();
+
 const PORT = 4050;
 
 app.listen(PORT, () => {

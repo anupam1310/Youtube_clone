@@ -1,4 +1,4 @@
-import ChannelModel from "../Model/Channel.Model.js";
+import ChannelModel from "../Models/Channel.modle.js";
 
 export async function getChannelName(req, res) {
     const { id } = req.params;
