@@ -55,7 +55,7 @@ export async function LoginUser(req, res) {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials, check your password" });
         }
-        const token = jwt.sign({ userId: user._id }, "SecretKey", { expiresIn: "1h" });
+        const token = jwt.sign({ userId: user._id }, "SecretKey", { expiresIn: "7w" });
         res.status(200).json({ message: "Login successful", token });
     } catch (error) {
         res.status(500).json({ message: "Error logging in", error });
@@ -77,8 +77,9 @@ export function LogoutUser(req, res) {
 
 export async function VerifyUser(req, res) {
     try {
-        const userId = req.user.userId;
+        const userId = req.userId
         const user = await UserModel.findById(userId);
+        // console.log(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
