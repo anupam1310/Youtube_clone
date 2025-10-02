@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Header from '../Component/Header.jsx';
+import { Link } from 'react-router-dom';
 
 function CreateChannelPage() {
   const [channelName, setChannelName] = useState('');
@@ -37,7 +38,7 @@ function CreateChannelPage() {
 
   return (
     <>
-    <Header />
+
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Create Channel</h1>
@@ -93,6 +94,9 @@ function CreateChannelPage() {
         {success && (
           <p className="mt-4 text-center text-green-600 text-sm">{success}</p>
         )}
+        <Link to="/">
+          <p className="mt-4 text-center text-blue-600 text-sm">Go back to Home</p>
+        </Link>
       </div>
     </div>
     </>

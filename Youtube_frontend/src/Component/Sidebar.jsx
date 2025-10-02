@@ -1,19 +1,15 @@
 import { FaHome, FaFire, FaRegCompass, FaBook , FaBars} from 'react-icons/fa';
 import {useState,useEffect} from 'react';
 import youtube_logo from '../assets/youtube.png';
+import { useSidebar } from './Sidebar.context.jsx';
 
-function Sidebar({openSidebar}) {
-    const [isOpen, setIsOpen] = useState(false);
+function Sidebar() {
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
 
-    useEffect(() => {
-      setIsOpen(openSidebar? true : false);
-    }, [openSidebar]);
   return (
-    <aside className={`fixed top-0 left-0 h-screen w-60 bg-white border-r p-4 z-40 ${isOpen ? 'block' : 'hidden'}`}>
+    <aside className={`fixed top-0 left-0 h-screen w-60 bg-white border-r p-4 z-40 ${isSidebarOpen ? 'block' : 'hidden'}`}>
       <ul className="flex flex-col gap-2">
-        {/* a button to hide the side bar based on value of state isOpen */}
-        <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer" onClick={() => setIsOpen(false)}>
-            {/* button should be a hamburger icon and on same line as that whould be written youtube with a logo of youtube */}
+        <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer" onClick={() => setIsSidebarOpen(false)}>
             <div className="flex items-center gap-2">
                 <FaBars className="text-xl" />
                 <img src={youtube_logo} alt="YouTube Logo" className="h-6" />
@@ -30,6 +26,7 @@ function Sidebar({openSidebar}) {
         <li className="py-2 px-4 hover:bg-gray-100"><FaBook className="inline mr-2" />Library</li>
         <hr className="my-2 border-t" />
       </ul>
+   
     </aside>
   );
 }

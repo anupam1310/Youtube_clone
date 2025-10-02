@@ -1,19 +1,19 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState , useEffect, useRef} from 'react';
 import { FaBars, FaSearch, FaUserCircle } from 'react-icons/fa';
 import youtube_logo from '../assets/youtube.png';
 import search_icon from '../assets/search.png';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
-
-
+import { useSidebar } from './Sidebar.context.jsx';
 
 function Header() {
     const navigate = useNavigate();
+    const { setIsSidebarOpen } = useSidebar();
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isChannelCreated, setIsChannelCreated] = useState(false);
-    const [openSidebar, setOpenSidebar] = useState(false);
+ 
 
     // check token in local storage
     useEffect(() => {
@@ -52,19 +52,19 @@ function Header() {
       setIsLoggedIn(false);
     };
 
-    const handleOpenSidebar = () => {
-      setOpenSidebar(!openSidebar ? true : false);
-      console.log("clicked");
-      // console.log(openSidebar);
-    };
+
 
   return (
     
     <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
-      <Sidebar openSidebar={openSidebar} />
+      <Sidebar />
+
       {/* Left: Hamburger + Logo */}
       <div className="flex items-center gap-4">
-        <button onClick={handleOpenSidebar} className="text-2xl text-gray-700 hover:bg-gray-100 p-2 rounded-full">
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="text-2xl text-gray-700 hover:bg-gray-100 p-2 rounded-full"
+        >
           <FaBars />
         </button>
         <button onClick={() => navigate("/")} className="hidden md:inline-flex">
@@ -120,7 +120,9 @@ function Header() {
             {/* Hide FaUserCircle on small screens */}
             <FaUserCircle className="hidden md:inline text-3xl md:text-6xl text-gray-700 hover:bg-gray-100 p-2 rounded-full" />
           </div>
+          
         )}
+        
       </div>
      </header>
 );
