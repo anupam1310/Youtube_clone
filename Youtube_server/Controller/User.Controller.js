@@ -32,7 +32,7 @@ export async function RegisterUser(req, res) {
     try {
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({ fullname, email, password: hashedPassword, avatar_url });
+        const newUser = new UserModel({ fullname, email, password: hashedPassword, avatar_url, channelID: "" });
         await newUser.save();
         res.status(200).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
@@ -86,6 +86,6 @@ export async function VerifyUser(req, res) {
         res.status(200).json({ message: "User verified", user });
     } catch (error) {
         res.status(500).json({ message: "Error verifying user", error });
-        console.log(error);
+        // console.log(error);
     }
 }

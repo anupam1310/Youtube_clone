@@ -35,9 +35,18 @@ function Header() {
           );
           if (response.data.user) {
             setIsLoggedIn(true);
+            // Check if channel is created
+            const userId = response.data.user._id;
+            const channelResponse = await axios.get(`http://localhost:4050/api/channel/user/${userId}`, {
+              headers: {
+                Authorization: `BEARER ${token}`,
+              },
+            });
+            setIsChannelCreated(channelResponse.data.length > 0);
           } else {
             setIsLoggedIn(false);
           }
+          console.log("User verified:", response.data.user);
         } catch (error) {
           console.error("Error verifying token:", error);
           setIsLoggedIn(false);
