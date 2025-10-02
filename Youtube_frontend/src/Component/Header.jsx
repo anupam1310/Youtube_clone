@@ -4,6 +4,7 @@ import youtube_logo from '../assets/youtube.png';
 import search_icon from '../assets/search.png';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 
 
@@ -12,6 +13,7 @@ function Header() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isChannelCreated, setIsChannelCreated] = useState(false);
+    const [openSidebar, setOpenSidebar] = useState(false);
 
     // check token in local storage
     useEffect(() => {
@@ -44,25 +46,31 @@ function Header() {
       verifyToken();
     }, []);
 
-
+    console.log("rerender");
     const handleLogout = () => {
       localStorage.removeItem("token");
       setIsLoggedIn(false);
     };
 
+    const handleOpenSidebar = () => {
+      setOpenSidebar(!openSidebar ? true : false);
+      // console.log(openSidebar);
+    };
+
   return (
     
     <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
+      <Sidebar openSidebar={openSidebar} />
       {/* Left: Hamburger + Logo */}
       <div className="flex items-center gap-4">
-        <button className="text-2xl text-gray-700 hover:bg-gray-100 p-2 rounded-full">
+        <button onClick={handleOpenSidebar} className="text-2xl text-gray-700 hover:bg-gray-100 p-2 rounded-full">
           <FaBars />
         </button>
         <img
           src={youtube_logo} 
           alt="YouTube Logo"
           className="h-10 w-auto"
-        /><span className="text-2xl text-gray-700">Youtube</span>
+        /><span className="hidden md:inline  text-2xl text-gray-700">Youtube</span>
       </div>
 
       {/* Center: Search */}
