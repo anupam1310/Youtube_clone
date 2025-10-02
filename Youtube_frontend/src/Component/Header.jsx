@@ -86,24 +86,37 @@ function Header() {
       </div>
 
       {/* Right: Icons */}
-        <div>
+      <div>
         {!isLoggedIn ? (
-        <button onClick={() => navigate("/register")}>Sign In</button>
-            ) : (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          
-          {(!isChannelCreated && isLoggedIn)?
-          <button>Create Channel</button>
-            : 
-            <button>My Channel</button>
-          }
-          <button style={{ color: 'blue', fontWeight: 'bold' }} onClick={handleLogout}>
-            Sign Out
+          <button
+            onClick={() => navigate("/register")}
+            className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          >
+            Sign In
           </button>
-          <FaUserCircle className="text-6xl text-gray-700 hover:bg-gray-100 p-2 rounded-full" />
-        </div>
+        ) : (
+          <div className="flex items-center gap-2 md:gap-4">
+            {(!isChannelCreated && isLoggedIn) ?
+              <button className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-100 rounded hover:bg-gray-200">
+                Create Channel
+              </button>
+              :
+              <button className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-100 rounded hover:bg-gray-200">
+                My Channel
+              </button>
+            }
+            <button
+              style={{ color: 'blue', fontWeight: 'bold' }}
+              className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base rounded"
+              onClick={handleLogout}
+            >
+              Sign Out
+            </button>
+            {/* Hide FaUserCircle on small screens */}
+            <FaUserCircle className="hidden md:inline text-3xl md:text-6xl text-gray-700 hover:bg-gray-100 p-2 rounded-full" />
+          </div>
         )}
-    </div>
+      </div>
      </header>
 );
 
