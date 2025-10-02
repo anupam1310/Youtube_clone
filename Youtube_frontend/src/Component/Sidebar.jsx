@@ -6,7 +6,7 @@ function Sidebar({openSidebar}) {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-      setIsOpen(openSidebar? true : true);
+      setIsOpen(openSidebar? true : false);
     }, [openSidebar]);
   return (
     <aside className={`fixed top-0 left-0 h-screen w-60 bg-white border-r p-4 z-40 ${isOpen ? 'block' : 'hidden'}`}>

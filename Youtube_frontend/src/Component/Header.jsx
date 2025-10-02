@@ -54,6 +54,7 @@ function Header() {
 
     const handleOpenSidebar = () => {
       setOpenSidebar(!openSidebar ? true : false);
+      console.log("clicked");
       // console.log(openSidebar);
     };
 
@@ -66,11 +67,13 @@ function Header() {
         <button onClick={handleOpenSidebar} className="text-2xl text-gray-700 hover:bg-gray-100 p-2 rounded-full">
           <FaBars />
         </button>
+        <button onClick={() => navigate("/")} className="hidden md:inline-flex">
         <img
           src={youtube_logo} 
           alt="YouTube Logo"
           className="h-10 w-auto"
         /><span className="hidden md:inline  text-2xl text-gray-700">Youtube</span>
+        </button>
       </div>
 
       {/* Center: Search */}
@@ -97,7 +100,9 @@ function Header() {
         ) : (
           <div className="flex items-center gap-2 md:gap-4">
             {(!isChannelCreated && isLoggedIn) ?
-              <button className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-100 rounded hover:bg-gray-200">
+              <button className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-100 rounded hover:bg-gray-200"
+                onClick={() => navigate("/create-channel")}
+              >
                 Create Channel
               </button>
               :

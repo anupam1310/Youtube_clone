@@ -3,6 +3,7 @@ import Header from "./Component/Header.jsx"
 import LoginPage from "./Pages/LoginPage.jsx"
 import RegisterPage from "./Pages/Register.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import CreateChannelPage from "./Pages/CreateChannelPage.jsx";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 
 function App() {
@@ -18,7 +19,12 @@ function App() {
     {
       path: "/register",
       element: <RegisterPage />,
+    },
+    {
+      path: "/create-channel",
+      element: <CreateChannelPage />,
     }
+
   ]);
 
   return (
