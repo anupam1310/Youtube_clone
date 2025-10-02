@@ -9,8 +9,8 @@ import { Schema } from 'mongoose';
 const channelSchema = new Schema({
     channelName: { type: String, required: true },
     ownerId: { type: String, required: true },
-    description: { type: String },
-    channelBanner: { type: String },
+    description: { type: String, required: true },
+    channelBannerURL: { type: String },
     subscribers: { type: Number, default: 0 },
     videos: [{ type: String }]
 });

@@ -26,10 +26,10 @@ export async function getChannelById(req, res) {
     }
 }
 export async function createChannel(req, res) {
-    const { channelName, description} = req.body;
-    const ownerId = req.user._id;
+    const { channelName, description, channelBannerURL } = req.body;
+    const ownerId = req.userId;
     try {
-        const newChannel = new ChannelModel({ channelName: channelName, description: description, ownerId: ownerId });
+        const newChannel = new ChannelModel({ channelName: channelName, description: description, ownerId: ownerId, channelBannerURL: channelBannerURL });
         await newChannel.save();
         res.status(201).json({ message: "Channel created successfully", channel: newChannel });
     } catch (error) {
