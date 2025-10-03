@@ -43,6 +43,7 @@ export async function createChannel(req, res) {
 
 export async function getChannelByUserId(req, res) {
     const { id } = req.params;
+    // console.log(id);
     try {
         const channels = await ChannelModel.find({ ownerId: id });
         res.status(200).json(channels);

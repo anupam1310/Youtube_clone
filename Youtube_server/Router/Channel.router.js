@@ -7,6 +7,7 @@ function ChannelRouter(app) {
     app.get('/api/channel/name/:id', verifyToken, getChannelName);
     app.get('/api/channel/:id', verifyToken, getChannelById);
     app.get('/api/channel/user/:id', verifyToken, getChannelByUserId);
+    console.log("Channel routes set up");
 }
 
 export default ChannelRouter;

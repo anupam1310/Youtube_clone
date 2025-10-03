@@ -24,9 +24,8 @@ function Header() {
           return;
         }
         try {
-          const response = await axios.post(
+          const response = await axios.get(
             'http://localhost:4050/api/verify',
-            {},
             {
               headers: {
                 Authorization: `BEARER ${token}`,
@@ -35,6 +34,7 @@ function Header() {
           );
           if (response.data.user) {
             setIsLoggedIn(true);
+            
             // Check if channel is created
             const userId = response.data.user._id;
             const channelResponse = await axios.get(`http://localhost:4050/api/channel/user/${userId}`, {
@@ -46,7 +46,7 @@ function Header() {
           } else {
             setIsLoggedIn(false);
           }
-          console.log("User verified:", response.data.user);
+          // console.log("User verified:", response.data.user);
         } catch (error) {
           console.error("Error verifying token:", error);
           setIsLoggedIn(false);
@@ -55,7 +55,7 @@ function Header() {
       verifyToken();
     }, []);
 
-    console.log("rerender");
+    // console.log("rerender");
     const handleLogout = () => {
       localStorage.removeItem("token");
       setIsLoggedIn(false);
@@ -115,7 +115,7 @@ function Header() {
                 Create Channel
               </button>
               :
-              <button className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-100 rounded hover:bg-gray-200">
+              <button onClick={() => navigate("/my-channel")} className="px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-100 rounded hover:bg-gray-200">
                 My Channel
               </button>
             }
