@@ -12,10 +12,11 @@ import { Schema } from 'mongoose';
 const videoSchema = new Schema({
     title: { type: String, required: true },
     thumbnailUrl: { type: String, required: true },
+    videoId: { type: String, required: true },
     description: { type: String },
     tags: { type: [String] },
     channelId: { type: String, required: true },
-    uploader: { type: String, required: true },
+    uploaderId: { type: String, required: true },
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
     dislikes: { type: Number, default: 0 },

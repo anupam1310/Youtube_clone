@@ -37,7 +37,12 @@ function MyChannelPage() {
   }, []);
 
 
-  if (!channel || !userInfo) return <div>Loading channel...</div>;
+  if (!channel || !userInfo) return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-200 mb-6"></div>
+      <p className="text-lg text-gray-700 font-semibold">Loading your channel...</p>
+    </div>
+  );
 
 
   return (

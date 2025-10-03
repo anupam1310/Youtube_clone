@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../Models/User.model.js";
 // Middleware to verify JWT token
-export function verifyToken(req, res, next) {
-
+function verifyToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     // Bearer tokenString
     // const token = authHeader && authHeader.split(' ')[1];
@@ -14,6 +13,7 @@ export function verifyToken(req, res, next) {
 
     jwt.verify(token, "SecretKey", (err, payload) => {
         if (err) {
+            console.log("Token verification failed:", err);
             return res.sendStatus(403);
         }
         // payload contains the decoded JWT data
@@ -23,3 +23,4 @@ export function verifyToken(req, res, next) {
         next();
     });
 }
+export { verifyToken };
