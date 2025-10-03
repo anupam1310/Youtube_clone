@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// function getYoutubeThumbnail(videoId) {
-//   return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-// }
 
 function VideoCard({ video }) {
   const [channelName, setChannelName] = useState("");
@@ -12,6 +9,8 @@ function VideoCard({ video }) {
     async function fetchChannelName() {
       try {
         const response = await axios.get(`http://localhost:4050/api/channel/${video.channelId}`);
+       
+        // console.log("Channel response:", response);
         setChannelName(response.data.channelName || "Unknown Channel");
       } catch (error) {
         setChannelName("Unknown Channel");

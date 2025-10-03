@@ -3,12 +3,15 @@ import { SidebarProvider } from "../Component/Sidebar.context.jsx";
 import Header from "../Component/Header.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import VideoGrid from "../Component/VideoGrid.jsx";
+import ChannelVideoCard from "../Component/ChannelVideoCard.jsx";
 
 function MyChannelPage() {
   // Example data, replace with your actual channel/user data
   const [channel, setChannel] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchChannelData = async () => {
@@ -39,6 +42,44 @@ function MyChannelPage() {
 
     fetchChannelData();
   }, []);
+
+  useEffect(() => {
+    async function fetchVideos() {
+      try {
+        if (!channel || !userInfo) return;
+
+        const response = await axios.get(
+          `http://localhost:4050/api/video/channel/${channel._id}`,
+          {
+            headers: {
+              Authorization: `BEARER ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setVideos(response.data);
+        console.log("Fetched videos:", response.data);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      }
+    }
+
+    fetchVideos();
+  }, [channel, userInfo]);
+
+  // Separate onDelete function
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this video?")) {
+      try {
+        const token = localStorage.getItem("token");
+        await axios.delete(`http://localhost:4050/api/video/${id}`, {
+          headers: { Authorization: `BEARER ${token}` },
+        });
+        setVideos((prev) => prev.filter((v) => v._id !== id));
+      } catch (error) {
+        alert("Failed to delete video.");
+      }
+    }
+  };
 
   if (!channel || !userInfo)
     return (
@@ -94,29 +135,20 @@ function MyChannelPage() {
           </div>
         </div>
 
-        {/* Videos Grid */}
+        {/* Videos Grid : fetch video from API and pass it to video card component */}
         <div className="mt-8 px-6">
           <h2 className="text-xl font-semibold mb-4">Videos</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {channel.videos.map((video) => (
-              <div
-                key={video.id}
-                className="bg-white rounded shadow hover:shadow-lg transition"
-              >
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="w-full h-40 object-cover rounded-t"
-                />
-                <div className="p-4">
-                  <h3 className="font-bold text-lg mb-2">{video.title}</h3>
-                  <p className="text-gray-500 text-sm">
-                    {video.views} views • {video.date}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {videos.length === 0 ? (
+              <p className="text-gray-500">No videos uploaded yet.</p>
+            ) : (
+              videos.map((video) => (
+                <li key={video._id}>
+                  <ChannelVideoCard video={video} onDelete={handleDelete} />
+                </li>
+              ))
+            )}
+          </ul>
         </div>
       </div>
     </>
