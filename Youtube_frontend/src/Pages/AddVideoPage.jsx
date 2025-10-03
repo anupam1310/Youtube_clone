@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { SidebarProvider } from "../Component/Sidebar.context.jsx";
+import Header from "../Component/Header.jsx";
 
 
 
@@ -16,7 +18,12 @@ function AddVideoPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setResult(null);
-        //extract video id from url
+        //extract video id from url and check it is a valid youtube url
+        if (!videoURL.includes("youtube.com/watch?v=")) {
+            setResult("Invalid YouTube URL");
+            setShowResult(true);
+            return;
+        }
         const urlParts = videoURL.split("v=");
         const videoId = urlParts.length > 1 ? urlParts[1].split("&")[0] : null;
         try {
@@ -56,6 +63,10 @@ function AddVideoPage() {
         }
     };
     return (
+        <>
+        <SidebarProvider>
+          <Header />
+        </SidebarProvider>
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
             <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-bold mb-6">Upload Video</h2>
@@ -118,6 +129,7 @@ function AddVideoPage() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

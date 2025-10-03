@@ -4,7 +4,7 @@ import UserModel from "../Models/User.model.js";
 export async function getChannelName(req, res) {
     const { id } = req.params;
     try {
-        const channel = await ChannelModel.findById(id);
+        const channel = await ChannelModel.find({ channelName: id });
         if (!channel) {
             return res.status(404).json({ message: "Channel not found" });
         }
@@ -37,7 +37,7 @@ export async function createChannel(req, res) {
         console.log(document);
         res.status(201).json({ message: "Channel created successfully", channel: newChannel });
     } catch (error) {
-        res.status(500).json({ message: "Error creating channel", error });
+        res.status(500).json({ error: error });
     }
 }
 

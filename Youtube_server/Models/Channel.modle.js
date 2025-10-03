@@ -7,10 +7,10 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 const channelSchema = new Schema({
-    channelName: { type: String, required: true },
+    channelName: { type: String, required: true , unique: true },
     ownerId: { type: String, required: true },
     description: { type: String, required: true },
-    channelBannerURL: { type: String },
+    channelBannerURL: { type: String, default: "" },
     subscribers: { type: Number, default: 0 },
     videos: [{ type: String }]
 });
