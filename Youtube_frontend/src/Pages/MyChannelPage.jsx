@@ -1,17 +1,18 @@
-import {useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import { SidebarProvider } from "../Component/Sidebar.context.jsx";
 import Header from "../Component/Header.jsx";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function MyChannelPage() {
   // Example data, replace with your actual channel/user data
-    const [channel, setChannel] = useState(null);
-    const [userInfo, setUserInfo] = useState(null);
+  const [channel, setChannel] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchChannelData = async () => {
       try {
-
         const userInfo = await axios.get("http://localhost:4050/api/verify", {
           headers: {
             Authorization: `BEARER ${localStorage.getItem("token")}`,
@@ -20,11 +21,14 @@ function MyChannelPage() {
         setUserInfo(userInfo);
         // console.log("User ID:", userInfo.data.user._id);
         // console.log("fetched user id");
-        const response = await axios.get(`http://localhost:4050/api/channel/user/${userInfo.data.user._id}`, {
-          headers: {
-            Authorization: `BEARER ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:4050/api/channel/user/${userInfo.data.user._id}`,
+          {
+            headers: {
+              Authorization: `BEARER ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setChannel(response.data[0]);
         // console.log("Channel data:", response.data[0].channelName);
         // console.log("fetched channel data");
@@ -36,18 +40,18 @@ function MyChannelPage() {
     fetchChannelData();
   }, []);
 
-
-  if (!channel || !userInfo) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-200 mb-6"></div>
-      <p className="text-lg text-gray-700 font-semibold">Loading your channel...</p>
-    </div>
-  );
-
+  if (!channel || !userInfo)
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-200 mb-6"></div>
+        <p className="text-lg text-gray-700 font-semibold">
+          Loading your channel...
+        </p>
+      </div>
+    );
 
   return (
     <>
-
       <SidebarProvider>
         <Header />
       </SidebarProvider>
@@ -74,12 +78,20 @@ function MyChannelPage() {
         {/* Channel Info */}
         <div className="pt-12 md:pt-20 px-6 flex flex-col md:flex-row items-start md:items-center justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold">{channel.channelName}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">
+              {channel.channelName}
+            </h1>
             <p className="text-gray-600">{channel.subscribers} subscribers</p>
           </div>
-          <button className="mt-4 md:mt-0 px-6 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700">
-            Customize Channel
-          </button>
+          <div className="flex space-x-4">
+            <button className="mt-4 md:mt-0 px-6 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700"
+            onClick={() => navigate("/add-video")}>
+              Add Video
+            </button>   
+            <button className="mt-4 md:mt-0 px-6 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700">
+              Customize Channel
+            </button>
+          </div>
         </div>
 
         {/* Videos Grid */}

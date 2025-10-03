@@ -5,6 +5,7 @@ import RegisterPage from "./Pages/Register.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import CreateChannelPage from "./Pages/CreateChannelPage.jsx";
 import MyChannelPage from "./Pages/MyChannelPage.jsx";
+import AddVideoPage from "./Pages/AddVideoPage.jsx";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 
 function App() {
@@ -28,7 +29,11 @@ function App() {
     {
       path: "/my-channel",
       element: <MyChannelPage />,
-    }
+    },
+    {
+      path: "/add-video",
+      element: <AddVideoPage />,
+    },
 
 
   ]);
