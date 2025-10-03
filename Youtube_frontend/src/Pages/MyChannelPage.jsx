@@ -122,6 +122,7 @@ function MyChannelPage() {
             <h1 className="text-2xl md:text-3xl font-bold">
               {channel.channelName}
             </h1>
+            <p className="text-gray-600">{channel.description}</p>
             <p className="text-gray-600">{channel.subscribers} subscribers</p>
           </div>
           <div className="flex space-x-4">
@@ -135,7 +136,6 @@ function MyChannelPage() {
           </div>
         </div>
 
-        {/* Videos Grid : fetch video from API and pass it to video card component */}
         <div className="mt-8 px-6">
           <h2 className="text-xl font-semibold mb-4">Videos</h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

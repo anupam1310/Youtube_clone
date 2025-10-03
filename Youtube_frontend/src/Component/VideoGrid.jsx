@@ -53,12 +53,12 @@ function VideoGrid() {
 
   return (
     <div className="px-4 py-6">
-      {/* Filter Tabs */}
-      <div className="flex gap-2 mb-6">
+      {/* Filter Tabs - horizontal scroll */}
+      <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         {TABS.map((tab) => (
           <button
             key={tab}
-            className={`px-4 py-2 rounded-full font-semibold border transition-all duration-200 ${
+            className={`px-4 py-2 rounded-full font-semibold border transition-all duration-200 whitespace-nowrap ${
               selectedTab === tab
                 ? "bg-blue-600 text-white border-blue-600"
                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"

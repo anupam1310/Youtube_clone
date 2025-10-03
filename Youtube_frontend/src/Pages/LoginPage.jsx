@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -69,6 +69,12 @@ function LoginPage() {
                 {error && (
                     <p className="mt-4 text-center text-red-500 text-sm">{error}</p>
                 )}
+                <Link to="/register" className="mt-4 text-center text-blue-600 hover:underline text-sm block">
+                    Don't have an account? Register
+                </Link>
+                <Link to="/" className="mt-2 text-center text-blue-600 hover:underline text-sm block">
+                    Back to Home
+                </Link>
             </div>
         </div>
     );
