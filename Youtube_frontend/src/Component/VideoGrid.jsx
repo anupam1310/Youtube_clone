@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import VideoCard from "./VideoCard";
 import axios from "axios";
 
-const TABS = ["All", "Gaming", "Music", "Education", "Coding"];
+
 
 function VideoGrid() {
   const [videos, setVideos] = useState([]);
   const [selectedTab, setSelectedTab] = useState("All");
   const [filteredVideos, setFilteredVideos] = useState([]);
+  const [TABS, setTABS] = useState(["All", "Gaming", "Music", "Education", "Coding"]);
 
   useEffect(() => {
     async function fetchVideos() {
@@ -19,6 +20,7 @@ function VideoGrid() {
       }
     }
     fetchVideos();
+    
   }, []);
 
   useEffect(() => {
@@ -32,6 +34,22 @@ function VideoGrid() {
       );
     }
   }, [selectedTab, videos]);
+
+    console.log("All videos:", videos);
+    useEffect(() => {
+      const uniqueTags = [];
+      videos.forEach(video => {
+        if (Array.isArray(video.tags)) {
+          video.tags.forEach(tag => {
+            if (!uniqueTags.includes(tag)) {
+              uniqueTags.push(tag);
+            }
+          });
+        }
+      });
+      setTABS(["All", ...uniqueTags]);
+    }, [videos]);
+  
 
   return (
     <div className="px-4 py-6">

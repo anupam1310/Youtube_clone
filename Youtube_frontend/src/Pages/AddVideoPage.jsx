@@ -13,6 +13,7 @@ function AddVideoPage() {
     const [videoURL, setVideoURL] = useState("");
     const [result, setResult] = useState(null);
     const [showResult,setShowResult]=useState(false);
+    const [thumbnailUrl, setThumbnailUrl] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -55,7 +56,7 @@ function AddVideoPage() {
                 videoId: videoId,
                 channelId: channelId,
                 uploaderId: userId,
-                thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+                thumbnailUrl: thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
             }, {
                 headers: { Authorization: `BEARER ${token}` },
                 
@@ -106,6 +107,7 @@ function AddVideoPage() {
                             value={tags}
                             onChange={(e) => setTags(e.target.value)}
                             className="w-full border border-gray-300 p-2 rounded"
+                            placeholder="Comma separated tags"
                             required
                         />
                     </div>
@@ -117,6 +119,16 @@ function AddVideoPage() {
                             onChange={(e) => setVideoURL(e.target.value)}
                             className="w-full border border-gray-300 p-2 rounded"
                             required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 mb-2">Thumbnail URL</label>
+                        <input
+                            type="text"
+                            value={thumbnailUrl}
+                            onChange={(e) => setThumbnailUrl(e.target.value)}
+                            className="w-full border border-gray-300 p-2 rounded"
+                            placeholder="If not provided, default YouTube thumbnail will be used"
                         />
                     </div>
                     <button
