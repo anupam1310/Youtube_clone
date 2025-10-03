@@ -6,7 +6,6 @@ with React.", "channelId": "channel01", "uploader": "user01", "views": 15200, "l
 "user02", "text": "Great video! Very helpful.", "timestamp": "2024-09-21T08:30:00Z" } ] }] 
 
 */
-import e from 'express';
 import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 const videoSchema = new Schema({

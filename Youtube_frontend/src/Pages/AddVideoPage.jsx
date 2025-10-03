@@ -27,38 +27,46 @@ function AddVideoPage() {
         const urlParts = videoURL.split("v=");
         const videoId = urlParts.length > 1 ? urlParts[1].split("&")[0] : null;
         try {
+            console.log("starting upload");
             const token = localStorage.getItem("token");
             if (!token) {
                 setResult("You must be logged in to upload a video");
                 setShowResult(true);
                 return;
             }
+            console.log("token found");
             // Fetching user info to get channelId
             const userResponse = await axios.get("http://localhost:4050/api/verify", {
                 headers: { Authorization: `BEARER ${token}` },
             });
+            console.log("user verified");
             const userInfo = userResponse.data.user;
             const userId = userInfo._id;
-            const channelId = userInfo.channelId;
+            const channelId = userInfo.channelID;
             if (!channelId) {
                 setResult("You must have a channel to upload a video");
                 setShowResult(true);
                 return;
-            }
-            const response = await axios.post("/api/video", {
+            };
+            const response = await axios.post("http://localhost:4050/api/upload/video", {
                 title: title,
                 description: description,
-                tags: tags,
+                tags: tags.split(',').map(tag => tag.trim()),
                 videoId: videoId,
                 channelId: channelId,
-                userId: userId
+                uploaderId: userId,
+                thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
             }, {
                 headers: { Authorization: `BEARER ${token}` },
+                
             });
+            console.log("video response:", response);
+            console.log("video uploaded:");
             setResult("Video uploaded successfully!");
             setShowResult(true);
         } catch (error) {
             setResult("Error uploading video");
+            console.error("Error uploading video:", error);
             setShowResult(true);
         }
     };

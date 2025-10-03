@@ -41,9 +41,8 @@ export async function getVideosByChannelId(req, res) {
 }
 
 export async function uploadVideo(req, res) {
-    const { title, description, tags, channelId, videoId } = req.body;
-    const uploaderId = req.userId;
-
+    const { title, description, tags, videoId, channelId, uploaderId, thumbnailUrl } = req.body;
+    console.log(req.body);
     try {
         const newVideo = new VideoModel({
             title: title,
@@ -51,12 +50,14 @@ export async function uploadVideo(req, res) {
             tags: tags,
             channelId: channelId,
             videoId: videoId,
-            uploaderId: uploaderId
+            uploaderId: uploaderId,
+            thumbnailUrl: thumbnailUrl
         });
         await newVideo.save();
         res.status(201).json(newVideo);
     } catch (error) {
         res.status(500).json({ message: "Error uploading video", error });
+        console.log(error);
     }
 }
 
