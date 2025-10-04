@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 function VideoCard({ video }) {
   const [channelName, setChannelName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchChannelName() {
       try {
         const response = await axios.get(`http://localhost:4050/api/channel/${video.channelId}`);
-       
-        // console.log("Channel response:", response);
         setChannelName(response.data.channelName || "Unknown Channel");
       } catch (error) {
         setChannelName("Unknown Channel");
@@ -20,7 +19,10 @@ function VideoCard({ video }) {
   }, [video.channelId]);
 
   return (
-    <div className="bg-white rounded-lg shadow hover:shadow-lg transition flex flex-col">
+    <div
+      className="bg-white rounded-lg shadow hover:shadow-lg transition flex flex-col cursor-pointer"
+      onClick={() => navigate(`/video/${video._id}`)}
+    >
       <img
         src={video.thumbnailUrl}
         alt={video.title}
