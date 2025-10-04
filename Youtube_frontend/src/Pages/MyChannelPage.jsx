@@ -77,6 +77,7 @@ function MyChannelPage() {
           headers: { Authorization: `BEARER ${token}` },
         });
         setVideos((prev) => prev.filter((v) => v._id !== id));
+        navigate("/my-channel");
       } catch (error) {
         alert("Failed to delete video.");
       }
