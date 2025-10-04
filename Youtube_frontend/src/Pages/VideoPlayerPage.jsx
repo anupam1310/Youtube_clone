@@ -11,6 +11,7 @@ function VideoPlayerPage() {
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
+  const [commenterNames, setCommenterNames] = useState({});
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -113,6 +114,26 @@ function VideoPlayerPage() {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    async function fetchNames() {
+      if (!videoData || !videoData.comments) return;
+      // console.log("Fetching commenter names");
+      const names = {};
+      await Promise.all(videoData.comments.map(async (comment) => {
+        try {
+          const response = await axios.get(`http://localhost:4050/api/user/${comment.userId}`);
+          console.log(response)
+          console.log("Fetched name for userId", comment.userId, ":", response.data.name);
+          names[comment.userId] = response.data.name;
+        } catch {
+          names[comment.userId] = "Unknown";
+        }
+      }));
+      setCommenterNames(names);
+    }
+    fetchNames();
+  }, [videoData]);
+
   if (!videoData) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   return (
@@ -174,7 +195,10 @@ function VideoPlayerPage() {
             {videoData.comments.map((comment) => (
               <li key={comment.commentId} className="mb-3 border-b pb-2">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold">{comment.userId}</span>
+                  <span className="font-semibold">
+                    {console.log(commenterNames) }
+                    {commenterNames[comment.userId] || "Unknown"}
+                  </span>
                   
                     <div className="flex gap-2">
                       <button
