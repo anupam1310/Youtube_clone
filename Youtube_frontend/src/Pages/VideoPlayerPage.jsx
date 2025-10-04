@@ -31,10 +31,13 @@ function VideoPlayerPage() {
   useEffect(() => {
     async function fetchRandomVideos() {
       try {
-        const response = await axios.get("http://localhost:4050/api/video/random");
+        console.log("Fetching random videos");
+        const response = await axios.get("http://localhost:4050/api/videos");
+        //randomise videos
+        response.data.sort(() => Math.random() - 0.5);
         setRandomVideos(response.data);
       } catch (error) {
-        // handle error
+        console.log("Error fetching random videos:", error);
       }
     }
     fetchRandomVideos();
@@ -148,7 +151,9 @@ function VideoPlayerPage() {
           </button>
         </div>
         <p className="mb-4 text-gray-700">{videoData.description}</p>
+
         {/* Comments */}
+
         <div className="mt-6">
           <h2 className="text-lg font-semibold mb-2">Comments</h2>
           <div className="mb-4 flex gap-2">
@@ -171,7 +176,7 @@ function VideoPlayerPage() {
               <li key={comment.commentId} className="mb-3 border-b pb-2">
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">{comment.userId}</span>
-                  {token && (
+                  
                     <div className="flex gap-2">
                       <button
                         className="text-blue-500 hover:underline text-sm"
@@ -179,17 +184,19 @@ function VideoPlayerPage() {
                           setEditingCommentId(comment.commentId);
                           setEditingCommentText(comment.text);
                         }}
+                        disabled={token ? false : true}
                       >
                         Edit
                       </button>
                       <button
                         className="text-red-500 hover:underline text-sm"
                         onClick={() => handleDeleteComment(comment.commentId)}
+                        disabled={token ? false : true}
                       >
                         Delete
                       </button>
                     </div>
-                  )}
+                  
                 </div>
                 {editingCommentId === comment.commentId ? (
                   <div className="flex gap-2 mt-2">

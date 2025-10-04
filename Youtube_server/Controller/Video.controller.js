@@ -2,10 +2,13 @@ import { Mongoose } from "mongoose";
 import VideoModel from "../Models/videos.model.js";
 
 export async function getRandomVideos(req, res) {
+        console.log("Inside getRandomVideos controller");
     try {
+        console.log("Fetching random videos");
         const videos = await VideoModel.aggregate([{ $sample: { size: 10 } }]);
         res.status(200).json(videos);
     } catch (error) {
+        console.log("Error fetching random videos:", error);
         res.status(500).json({ message: "Error fetching random videos", error });
     }};
 
@@ -131,15 +134,15 @@ export async function editComment(req, res) {
     const { text } = req.body;
 
     try {
-        console.log("starting try block");
+        // console.log("starting try block");
         const video = await VideoModel.findById(videoId);
         if (!video) {
             return res.status(404).json({ message: "Video not found" });
         }
-        console.log("Video found:", videoId);
-        console.log("Comment ID to edit:", commentId);
+        // console.log("Video found:", videoId);
+        // console.log("Comment ID to edit:", commentId);
         const comment = video.comments.find(c => c.commentId === commentId);
-        console.log("Comment found:", comment);
+        // console.log("Comment found:", comment);
         if (!comment) {
             return res.status(404).json({ message: "Comment not found" });
         }
