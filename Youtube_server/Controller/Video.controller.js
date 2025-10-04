@@ -1,3 +1,4 @@
+import { Mongoose } from "mongoose";
 import VideoModel from "../Models/videos.model.js";
 
 export async function getRandomVideos(req, res) {
@@ -76,5 +77,98 @@ export async function deleteVideo(req, res) {
         res.status(200).json({ message: "Video deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: "Error deleting video", error });
+    }
+}
+
+export async function addComment(req, res) {
+    const videoId = req.params.id;
+    const userId = req.userId;
+    const { text } = req.body;
+
+    try {
+        const video = await VideoModel.findById(videoId);
+        if (!video) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+        const newComment = {
+            commentId: new ObjectId(),
+            userId:userId,
+            text:text,
+            timestamp: new Date()
+        };
+        video.comments.push(newComment);
+        await video.save();
+        res.status(201).json(newComment);
+    } catch (error) {
+        res.status(500).json({ message: "Error adding comment", error });
+    }
+}
+export async function deleteComment(req, res) {
+    const videoId = req.params.id;
+    const commentId = req.params.commentId;
+
+
+    try {
+        const video = await VideoModel.findById(videoId);
+        if (!video) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+        video.comments = video.comments.filter(c => c.commentId !== commentId);
+        await video.save();
+        res.status(200).json({ message: "Comment deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting comment", error });
+    }
+}
+
+export async function editComment(req, res) {
+    const videoId = req.params.id;
+    const commentId = req.params.commentId;
+    const { text } = req.body;
+
+    try {
+        const video = await VideoModel.findById(videoId);
+        if (!video) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+        const comment = video.comments.id(commentId);
+        if (!comment) {
+            return res.status(404).json({ message: "Comment not found" });
+        }
+        comment.text = text;
+        await video.save();
+        res.status(200).json({ message: "Comment edited successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error editing comment", error });
+    }
+}
+
+export async function likeVideoById(req, res) {
+    const videoId = req.params.id;
+    try {
+        const video = await VideoModel.findById(videoId);
+        if (!video) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+        video.likes += 1;
+        await video.save();
+        res.status(200).json({ message: "Video liked successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error liking video", error });
+    }
+}
+
+export async function dislikeVideoById(req, res) {
+    const videoId = req.params.id;
+    try {
+        const video = await VideoModel.findById(videoId);
+        if (!video) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+        video.dislikes += 1;
+        await video.save();
+        res.status(200).json({ message: "Video disliked successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error disliking video", error });
     }
 }
