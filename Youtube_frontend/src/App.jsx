@@ -10,6 +10,7 @@ import VideoPlayerPage from "./Pages/VideoPlayerPage.jsx";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import { SearchWordProvider } from "./Component/SearchWord.context.jsx";
 import { SidebarProvider } from "./Component/Sidebar.context.jsx";
+import NotFoundPage from "./Pages/NotFoundPage.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -39,9 +40,11 @@ function App() {
     },
     { path: "/video/:id",
       element: <VideoPlayerPage />, 
+    },
+    {
+      path: "*",
+      element: <NotFoundPage />,
     }
-
-
 
   ]);
 
