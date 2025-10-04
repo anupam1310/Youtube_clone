@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
+// 404 Not Found Page with link to home
 function NotFoundPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">

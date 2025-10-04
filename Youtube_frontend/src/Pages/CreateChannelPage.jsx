@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../Component/Header.jsx";
 import { Link } from "react-router-dom";
 
+// Create Channel Page with form to create a new channel
 function CreateChannelPage() {
   const [channelName, setChannelName] = useState("");
   const [description, setDescription] = useState("");
@@ -26,29 +27,32 @@ function CreateChannelPage() {
 
     try {
       const token = localStorage.getItem("token");
-        if (!token) {
+      if (!token) {
         setError("User not authenticated");
         return;
       }
       //check if channel name already exists
-      const existingChannel = await axios.get(`http://localhost:4050/api/channel/name/${channelName}`, {
-        headers: {
-          Authorization: `BEARER ${token}`,
-        },
-      });
+      const existingChannel = await axios.get(
+        `http://localhost:4050/api/channel/name/${channelName}`,
+        {
+          headers: {
+            Authorization: `BEARER ${token}`,
+          },
+        }
+      );
 
       if (existingChannel.data.length > 0) {
         console.log(existingChannel.data);
         setError("Channel name already exists");
         return;
       }
-
+      // Create channel API call
       const response = await axios.post(
         "http://localhost:4050/api/channel/create",
-        { 
-            channelName: channelName, 
-            description: description, 
-            channelBannerURL: channelBannerURL 
+        {
+          channelName: channelName,
+          description: description,
+          channelBannerURL: channelBannerURL,
         },
         {
           headers: {
@@ -60,13 +64,13 @@ function CreateChannelPage() {
       setChannelName("");
       setDescription("");
       setChannelBannerURL("");
-      
     } catch (err) {
       setError(err.response?.data?.message || "Error creating channel");
       console.error(err);
     }
   };
 
+  // Rendering the Create Channel form
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -99,7 +103,6 @@ function CreateChannelPage() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Describe your channel"
                 rows={3}
-
               />
             </div>
             <div>
@@ -112,7 +115,6 @@ function CreateChannelPage() {
                 onChange={(e) => setChannelBannerURL(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Optional: Banner image URL"
-                
               />
             </div>
             <button

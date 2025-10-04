@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+// Card component to display individual video details with delete functionality
 function ChannelVideoCard({ video, onDelete }) {
   // Convert videoId to YouTube thumbnail URL
   const thumbnailUrl = video.thumbnailUrl || `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`;
   const navigate = useNavigate();
+  //returning card with delete button and link to video page
   return (
     <div className="bg-white rounded shadow hover:shadow-lg transition flex flex-col"
     onClick={() => navigate(`/video/${video._id}`)}

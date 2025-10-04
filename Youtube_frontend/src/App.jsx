@@ -1,17 +1,17 @@
-
-import Header from "./Component/Header.jsx"
-import LoginPage from "./Pages/LoginPage.jsx"
+import Header from "./Component/Header.jsx";
+import LoginPage from "./Pages/LoginPage.jsx";
 import RegisterPage from "./Pages/Register.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import CreateChannelPage from "./Pages/CreateChannelPage.jsx";
 import MyChannelPage from "./Pages/MyChannelPage.jsx";
 import AddVideoPage from "./Pages/AddVideoPage.jsx";
 import VideoPlayerPage from "./Pages/VideoPlayerPage.jsx";
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SearchWordProvider } from "./Component/SearchWord.context.jsx";
 import { SidebarProvider } from "./Component/Sidebar.context.jsx";
 import NotFoundPage from "./Pages/NotFoundPage.jsx";
 
+// Main App component with routing to different pages
 function App() {
   const router = createBrowserRouter([
     {
@@ -38,16 +38,13 @@ function App() {
       path: "/add-video",
       element: <AddVideoPage />,
     },
-    { path: "/video/:id",
-      element: <VideoPlayerPage />, 
-    },
+    { path: "/video/:id", element: <VideoPlayerPage /> },
     {
       path: "*",
       element: <NotFoundPage />,
-    }
-
+    },
   ]);
-
+  // Main App component with routing to different pages
   return (
     <>
       <SearchWordProvider>
@@ -55,10 +52,8 @@ function App() {
           <RouterProvider router={router} />
         </SidebarProvider>
       </SearchWordProvider>
-
-
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -3,14 +3,32 @@ import VideoCard from "./VideoCard";
 import axios from "axios";
 import { useSearchWord } from "./SearchWord.context.jsx";
 
-
+// VideoGrid component to display videos in a grid layout with filtering and search functionality
 function VideoGrid() {
   const [videos, setVideos] = useState([]);
   const [selectedTab, setSelectedTab] = useState("All");
   const [filteredVideos, setFilteredVideos] = useState([]);
-  const [TABS, setTABS] = useState(["All", "Gaming", "Music", "Education", "Coding"]);
+  const [TABS, setTABS] = useState([
+    "All",
+    "Gaming",
+    "Music",
+    "Education",
+    "Coding",
+  ]);
   const { searchWord } = useSearchWord();
 
+  // Fetch videos from backend
+  useEffect(() => {
+    async function fetchVideos() {
+      try {
+        const response = await axios.get("http://localhost:4050/api/videos");
+        setVideos(response.data);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      }
+    }
+    fetchVideos();
+  }, []);
 
   // Filter videos based on search word
   useEffect(() => {
@@ -25,48 +43,33 @@ function VideoGrid() {
     }
   }, [searchWord, videos]);
 
-  useEffect(() => {
-    async function fetchVideos() {
-      try {
-        const response = await axios.get("http://localhost:4050/api/videos");
-        setVideos(response.data);
-      } catch (error) {
-        console.error("Error fetching videos:", error);
-      }
-    }
-    fetchVideos();
-    
-  }, []);
-
+  // Filter videos based on selected tab
   useEffect(() => {
     if (selectedTab === "All") {
       setFilteredVideos(videos);
     } else {
       setFilteredVideos(
-        videos.filter((video) =>
-          video.tags && video.tags.includes(selectedTab)
-        )
+        videos.filter((video) => video.tags && video.tags.includes(selectedTab))
       );
     }
   }, [selectedTab, videos]);
 
-    console.log("All videos:", videos);
-    useEffect(() => {
-      const uniqueTags = [];
-      videos.forEach(video => {
-        if (Array.isArray(video.tags)) {
-          video.tags.forEach(tag => {
-            if (!uniqueTags.includes(tag)) {
-              uniqueTags.push(tag);
-            }
-          });
-        }
-      });
-      setTABS(["All", ...uniqueTags]);
-    }, [videos]);
-  
+  // Extract unique tags from videos to create dynamic tabs
+  useEffect(() => {
+    const uniqueTags = [];
+    videos.forEach((video) => {
+      if (Array.isArray(video.tags)) {
+        video.tags.forEach((tag) => {
+          if (!uniqueTags.includes(tag)) {
+            uniqueTags.push(tag);
+          }
+        });
+      }
+    });
+    setTABS(["All", ...uniqueTags]);
+  }, [videos]);
 
-
+  // Render component
   return (
     <div className="px-4 py-6">
       {/* Filter Tabs - horizontal scroll */}

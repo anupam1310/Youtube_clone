@@ -1,17 +1,15 @@
-//{ userId: "user01", username: "JohnDoe", email: "john@example.com", password: 
-//"hashedPassword123", avatar: "https://example.com/avatar/johndoe.png", channels: 
-//["channel01"], }  
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
-
+// Define the User schema
 const userSchema = new Schema({
-    fullname: { type: String, required: true},
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    avatar_url: { type: String },
-    channelID: { type: String },
+  fullname: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  avatar_url: { type: String },
+  channelID: { type: String },
 });
-const UserModel = mongoose.model('User', userSchema);
+// Create and export the User model
+const UserModel = mongoose.model("User", userSchema);
 
 export default UserModel;

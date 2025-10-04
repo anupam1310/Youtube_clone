@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 import VideoGrid from "../Component/VideoGrid.jsx";
 import ChannelVideoCard from "../Component/ChannelVideoCard.jsx";
 
+// My Channel Page with channel info, banner, avatar, and videos
 function MyChannelPage() {
-  // Example data, replace with your actual channel/user data
   const [channel, setChannel] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
 
+  // Fetch channel data on component mount
   useEffect(() => {
     const fetchChannelData = async () => {
       try {
@@ -33,8 +34,7 @@ function MyChannelPage() {
           }
         );
         setChannel(response.data[0]);
-        // console.log("Channel data:", response.data[0].channelName);
-        // console.log("fetched channel data");
+ 
       } catch (error) {
         console.error("Error fetching channel data:", error);
       }
@@ -43,6 +43,7 @@ function MyChannelPage() {
     fetchChannelData();
   }, []);
 
+  // Fetch videos for the channel
   useEffect(() => {
     async function fetchVideos() {
       try {
@@ -66,7 +67,8 @@ function MyChannelPage() {
     fetchVideos();
   }, [channel, userInfo]);
 
-  // Separate onDelete function
+
+  //Delete video function
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this video?")) {
       try {
@@ -81,6 +83,8 @@ function MyChannelPage() {
     }
   };
 
+
+  // Loading state
   if (!channel || !userInfo)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -91,10 +95,11 @@ function MyChannelPage() {
       </div>
     );
 
+
+  // Render channel page  
   return (
     <>
-    
-        <Header />
+      <Header />
 
       <div className="min-h-screen bg-gray-50">
         {/* Banner */}
@@ -135,7 +140,7 @@ function MyChannelPage() {
             </button>
           </div>
         </div>
-
+        {/* Videos Grid */}
         <div className="mt-8 px-6">
           <h2 className="text-xl font-semibold mb-4">Videos</h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

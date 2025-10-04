@@ -1,20 +1,17 @@
-/**{ channelId: "channel01", channelName: "Code with John", owner: "user01", description: 
-"Coding tutorials and tech reviews by John Doe.", channelBanner:  
-"https://example.com/banners/john_banner.png", subscribers: 5200, videos: ["video01", 
-"video02"], }  */
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
-
+// Define the Channel schema
 const channelSchema = new Schema({
-    channelName: { type: String, required: true , unique: true },
-    ownerId: { type: String, required: true },
-    description: { type: String, required: true },
-    channelBannerURL: { type: String, default: "" },
-    subscribers: { type: Number, default: 0 },
-    videos: [{ type: String }]
+  channelName: { type: String, required: true, unique: true },
+  ownerId: { type: String, required: true },
+  description: { type: String, required: true },
+  channelBannerURL: { type: String, default: "" },
+  subscribers: { type: Number, default: 0 },
+  videos: [{ type: String }],
 });
 
-const ChannelModel = mongoose.model('Channel', channelSchema);
+// Create and export the Channel model
+const ChannelModel = mongoose.model("Channel", channelSchema);
 
 export default ChannelModel;
