@@ -1,11 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function ChannelVideoCard({ video, onDelete }) {
   // Convert videoId to YouTube thumbnail URL
   const thumbnailUrl = video.thumbnailUrl || `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`;
-
+  const navigate = useNavigate();
   return (
-    <div className="bg-white rounded shadow hover:shadow-lg transition flex flex-col">
+    <div className="bg-white rounded shadow hover:shadow-lg transition flex flex-col"
+    onClick={() => navigate(`/video/${video._id}`)}
+    >
       <img
         src={thumbnailUrl}
         alt={video.title}
