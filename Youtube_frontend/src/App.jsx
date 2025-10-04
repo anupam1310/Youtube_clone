@@ -8,6 +8,8 @@ import MyChannelPage from "./Pages/MyChannelPage.jsx";
 import AddVideoPage from "./Pages/AddVideoPage.jsx";
 import VideoPlayerPage from "./Pages/VideoPlayerPage.jsx";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import { SearchWordProvider } from "./Component/SearchWord.context.jsx";
+import { SidebarProvider } from "./Component/Sidebar.context.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -45,9 +47,12 @@ function App() {
 
   return (
     <>
+      <SearchWordProvider>
+        <SidebarProvider>
+          <RouterProvider router={router} />
+        </SidebarProvider>
+      </SearchWordProvider>
 
-
-      <RouterProvider router={router} />
 
     </>
   )

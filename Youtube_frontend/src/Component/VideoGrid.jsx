@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import VideoCard from "./VideoCard";
 import axios from "axios";
-
+import { useSearchWord } from "./SearchWord.context.jsx";
 
 
 function VideoGrid() {
@@ -9,6 +9,21 @@ function VideoGrid() {
   const [selectedTab, setSelectedTab] = useState("All");
   const [filteredVideos, setFilteredVideos] = useState([]);
   const [TABS, setTABS] = useState(["All", "Gaming", "Music", "Education", "Coding"]);
+  const { searchWord } = useSearchWord();
+
+
+  // Filter videos based on search word
+  useEffect(() => {
+    if (searchWord.trim() === "") {
+      setFilteredVideos(videos);
+    } else {
+      setFilteredVideos(
+        videos.filter((video) =>
+          video.title.toLowerCase().includes(searchWord.toLowerCase())
+        )
+      );
+    }
+  }, [searchWord, videos]);
 
   useEffect(() => {
     async function fetchVideos() {
@@ -50,6 +65,7 @@ function VideoGrid() {
       setTABS(["All", ...uniqueTags]);
     }, [videos]);
   
+
 
   return (
     <div className="px-4 py-6">

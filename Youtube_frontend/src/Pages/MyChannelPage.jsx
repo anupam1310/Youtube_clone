@@ -93,9 +93,9 @@ function MyChannelPage() {
 
   return (
     <>
-      <SidebarProvider>
+    
         <Header />
-      </SidebarProvider>
+
       <div className="min-h-screen bg-gray-50">
         {/* Banner */}
         <div className="w-full h-40 md:h-64 bg-gray-200 relative">

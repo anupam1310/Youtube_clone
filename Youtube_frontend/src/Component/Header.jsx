@@ -6,10 +6,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useSidebar } from './Sidebar.context.jsx';
+import { useSearchWord } from './SearchWord.context.jsx';
 
 function Header() {
     const navigate = useNavigate();
     const { setIsSidebarOpen } = useSidebar();
+    const { searchWord, setSearchWord } = useSearchWord();
+    const [searchInput, setSearchInput] = useState("");
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isChannelCreated, setIsChannelCreated] = useState(false);
@@ -62,6 +65,11 @@ function Header() {
       navigate("/");
     };
 
+    const handleSearch = (e) => {
+      e.preventDefault();
+
+      setSearchWord(searchInput);
+    };
 
 
   return (
@@ -92,8 +100,12 @@ function Header() {
           type="text"
           placeholder="Search"
           className="w-full px-4 py-2 border border-gray-300 rounded-l-full focus:outline-none focus:border-blue-500"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
         />
-        <button className='bg-gray-100 px-4 py-2 border border-gray-300 rounded-r-full hover:bg-gray-200'>
+        <button className='bg-gray-100 px-4 py-2 border border-gray-300 rounded-r-full hover:bg-gray-200'
+          onClick={handleSearch}
+          >
           <FaSearch className="text-2xl text-gray-600" />
         </button>
       </div>

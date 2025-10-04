@@ -117,9 +117,8 @@ function VideoPlayerPage() {
 
   return (
     <>
-    <SidebarProvider>
-        <Header />
-    </SidebarProvider>
+ 
+          <Header />
     <div className="flex flex-col md:flex-row gap-6 px-4 py-6">
       {/* Main Video Section */}
       <div className="flex-1">
