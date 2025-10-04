@@ -1,4 +1,4 @@
-import { getAllVideos,getRandomVideos,getVideoById, getVideosByChannelId,uploadVideo,deleteVideo , addComment, editComment, deleteComment} from "../Controller/Video.controller.js";
+import { getAllVideos,getRandomVideos,getVideoById, getVideosByChannelId,uploadVideo,deleteVideo , addComment, editComment, deleteComment, likeVideoById, dislikeVideoById} from "../Controller/Video.controller.js";
 import { verifyToken } from "../Middleware/verify.js";
 function VideoRouter(app) {
     console.log("Setting up video routes");

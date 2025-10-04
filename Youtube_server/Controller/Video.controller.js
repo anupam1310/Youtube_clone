@@ -84,18 +84,20 @@ export async function addComment(req, res) {
     const videoId = req.params.id;
     const userId = req.userId;
     const { text } = req.body;
-
+    // console.log("User ID:", userId);
     try {
         const video = await VideoModel.findById(videoId);
         if (!video) {
             return res.status(404).json({ message: "Video not found" });
         }
+        // console.log("Adding comment to video:", videoId);
         const newComment = {
-            commentId: new ObjectId(),
+            commentId: video.comments.length + 1 + "", 
             userId:userId,
             text:text,
             timestamp: new Date()
         };
+        // console.log("New Comment:", newComment);
         video.comments.push(newComment);
         await video.save();
         res.status(201).json(newComment);
@@ -106,13 +108,15 @@ export async function addComment(req, res) {
 export async function deleteComment(req, res) {
     const videoId = req.params.id;
     const commentId = req.params.commentId;
-
+    // console.log("Comment ID to delete:", commentId);
 
     try {
+        // console.log("starting try block");
         const video = await VideoModel.findById(videoId);
         if (!video) {
             return res.status(404).json({ message: "Video not found" });
         }
+        // console.log("Video found:", videoId);
         video.comments = video.comments.filter(c => c.commentId !== commentId);
         await video.save();
         res.status(200).json({ message: "Comment deleted successfully" });
@@ -127,14 +131,19 @@ export async function editComment(req, res) {
     const { text } = req.body;
 
     try {
+        console.log("starting try block");
         const video = await VideoModel.findById(videoId);
         if (!video) {
             return res.status(404).json({ message: "Video not found" });
         }
-        const comment = video.comments.id(commentId);
+        console.log("Video found:", videoId);
+        console.log("Comment ID to edit:", commentId);
+        const comment = video.comments.find(c => c.commentId === commentId);
+        console.log("Comment found:", comment);
         if (!comment) {
             return res.status(404).json({ message: "Comment not found" });
         }
+        console.log("Comment found:", commentId);
         comment.text = text;
         await video.save();
         res.status(200).json({ message: "Comment edited successfully" });
